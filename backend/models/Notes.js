@@ -20,9 +20,12 @@ const NotesSchema= new mongoose.Schema({
         type: String,
         default: 'General'
     },
-    
+    images: [{
+        type: String,  // Store paths or URLs of images
+        default:[]
+    }],
     date:{
-        type:String,
+        type:Date,
         default: Date.now
     },
 

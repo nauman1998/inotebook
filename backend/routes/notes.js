@@ -3,7 +3,20 @@ const router = express.Router()
 const fetchuser = require('../middleware/fetchuser')
 const Notes = require('../models/Notes')
 const { body, validationResult } = require('express-validator')
+const multer = require('multer');
+const path = require('path');
 
+// Set up storage engine for multer
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/');  // Upload folder path
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));  // Unique file name
+    }
+});
+// Initialize multer with storage engine
+const upload = multer({ storage: storage });
 
 
 
@@ -23,7 +36,7 @@ router.get('/fetchallnotes', fetchuser, async (req, res) => {
 
 //ROUTE 2: Add a new Notes using: POST "/api/notes/addnote" . require login
 
-router.post('/addnote', fetchuser, [
+router.post('/addnote', fetchuser, upload.array('images', 10), [
     body('title', 'Enter a valid title').isLength({ min: 3 }),
     body('description', 'Description must be atleast 5 characters').isLength({ min: 5 }),
 
@@ -39,9 +52,10 @@ router.post('/addnote', fetchuser, [
             if (!errors.isEmpty()) {
                 return res.status(400).json({ errors: errors.array() });
             }
-
+            // Get image file paths from multer
+            const images = req.files.map(file => file.path);
             const note = new Notes({
-                title, description, tag, user: req.user.id
+                title, description, tag, user: req.user.id, images
             })
             const savenote = await note.save()
             res.json(savenote)
@@ -60,8 +74,8 @@ router.post('/addnote', fetchuser, [
             res.status(500).send('Internal server error occured')
         }
     })
-//ROUTE 3: Update Notes using: PUT "/api/notes/updatenote" . require login
-router.put('/updatenote/:id', fetchuser,
+//ROUTE 3: Update Notes with images using: PUT "/api/notes/updatenote" . require login
+router.put('/updatenote/:id', fetchuser, upload.array('images', 10),
     async (req, res) => {
         const { title, description, tag } = req.body
         try {
@@ -70,6 +84,10 @@ router.put('/updatenote/:id', fetchuser,
             if (title) { newNote.title = title }
             if (description) { newNote.description = description }
             if (tag) { newNote.tag = tag }
+            // Get image file paths from multer if new images are uploaded
+            if (req.files) {
+                newNote.images = req.files.map(file => file.path);
+            }
             // find the note to be updated and update it
             let note = await Notes.findById(req.params.id)
             if (!note) {
@@ -93,7 +111,7 @@ router.put('/updatenote/:id', fetchuser,
 //ROUTE 4: Delete Notes using: DELETE "/api/notes/deletenote" . require login
 router.delete('/deletenote/:id', fetchuser,
     async (req, res) => {
-       
+
         try {
             // find the note to be deleted and deleted it
             let note = await Notes.findById(req.params.id)

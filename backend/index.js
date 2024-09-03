@@ -12,6 +12,9 @@ app.use(express.json())
 // Available Routes
 app.use('/api/auth',require('./routes/auth'))
 app.use('/api/notes',require('./routes/notes'))
+// Serve static files from the "uploads" directory
+app.use('/uploads', express.static('uploads'));
+
 
 // app.get('/', (req, res) => {
 //   res.send('Hello World!')
