@@ -22,16 +22,25 @@ const NoteItem = (props) => {
                 rel="noopener noreferrer"
                 className="me-2 mb-2"
             >
-                <img
-                    src={`${baseURL}/${imageSrc.replace(/\\/g, '/')}`}
-                    alt={`Note ${note.title} Image ${index + 1}`}
-                    width="100px"
-                    onError={(e) => {
-                        e.target.onerror = null; // Prevent infinite loop if placeholder fails
-                        e.target.src = "/path/to/placeholder-imageSrc.png"; // Path to placeholder image
-                    }}
-                    className="img-thumbnail"
-                />
+                {imageSrc.toLowerCase().endsWith('.pdf') ? (
+                    // Show an icon or text indicating this is a PDF
+                    <span>
+                        <i className="fa fa-file-pdf-o" aria-hidden="true"></i> {/* FontAwesome PDF icon */}
+                        View PDF
+                    </span>
+                ) : (
+                    // Render an image
+                    <img
+                        src={`${baseURL}/${imageSrc.replace(/\\/g, '/')}`}
+                        alt={`Note ${note.title} Image ${index + 1}`}
+                        width="100px"
+                        onError={(e) => {
+                            e.target.onerror = null; // Prevent infinite loop if placeholder fails
+                            // e.target.src = "/path/to/placeholder-imageSrc.png"; // Path to placeholder image
+                        }}
+                        className="img-thumbnail"
+                    />
+                )}
             </a>
         ));
     };
@@ -41,22 +50,22 @@ const NoteItem = (props) => {
             <div className="card my-3 mx-2 shadow-sm rounded">
                 <div className="card-body">
                     <div className="text-end">
-                        <i 
-                            className="fa-regular fa-pen-to-square mx-2 cursor-pointer" 
+                        <i
+                            className="fa-regular fa-pen-to-square mx-2 cursor-pointer"
                             onClick={() => updateNote(note)}
                         />
-                        <i 
-                            className="fa-solid fa-trash cursor-pointer" 
+                        <i
+                            className="fa-solid fa-trash cursor-pointer"
                             onClick={() => {
-                                deleteNote(note._id); 
+                                deleteNote(note._id);
                                 showAlert('Deleted Successfully', 'success');
                             }}
                         />
                     </div>
                     <h5 className="card-title mb-2">
                         {note.title}
-                        <span 
-                            className="badge bg-danger position-absolute top-0 translate-middle rounded-pill" 
+                        <span
+                            className="badge bg-danger position-absolute top-0 translate-middle rounded-pill"
                             style={{ left: "90%", zIndex: 1 }}
                         >
                             {note.tag}

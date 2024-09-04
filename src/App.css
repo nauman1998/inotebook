@@ -44,3 +44,55 @@ i{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 20px;
 }
+.loginform{
+  width: auto;
+  padding: 90px 65px;
+  background-color: #f0f8ff;
+  border-radius: 4px;
+  margin-top: 30px;
+  
+
+}
+.signupform{
+  width: auto;
+  padding: 90px 65px;
+  background-color: #f0f8ff;
+  border-radius: 4px;
+  margin-top: 30px;
+  
+
+}
+.loginImage{
+  height: auto;
+    width: fill;
+    margin: px;
+}
+/* .loginContainer{
+  display: flex;
+} */
+
+
+
+/* media query start */
+@media (max-width: 800px) {
+  .loginImage{
+    display: none;
+  }
+  
+}
+
+
+
+@media (max-width: 500px) {
+  .loginImage{
+    display: block;
+  }
+  .loginform {
+    padding: 33px 30px;
+  }
+  .signupform {
+    padding: 33px 30px;
+  }
+  
+}
+/* end */

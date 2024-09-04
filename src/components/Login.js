@@ -44,31 +44,51 @@ const Login = (props) => {
 
     }
     return (
-        <div className='container'>
+        <>
+            <div className="container">
 
-            <form onSubmit={handlesubmit} className='my-5'>
-                <h3>Login to Continue InoteBook...</h3>
-                <div className="form-group">
-                    <label htmlFor="email">Email address</label>
-                    <input type="email" onChange={onChange} value={credentials.email} name='email' className="form-control" id="email" aria-describedby="emailHelp" />
-                    <small id="email" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-sm-6">
+                        <img className="loginImage" src="https://project-inotebook.netlify.app/static/media/Login-signup.0eb2d81b.png" alt="something" />
+
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-6">
+                    <form onSubmit={handlesubmit} className='loginform '>
+                        <h3>Login to Continue InoteBook...</h3>
+                        <div className="form-group">
+                            <label htmlFor="email">Email address</label>
+                            <input type="email" onChange={onChange} value={credentials.email} name='email' className="form-control" id="email" aria-describedby="emailHelp" />
+                            <small id="email" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password">Password</label>
+                            <input type="password" onChange={onChange} value={credentials.password} name='password' className="form-control" id="password" />
+                        </div>
+                        <div className="col-auto">
+                            <span id="passwordHelpInline" className="form-text">
+                                Must be 5-8 characters long.
+                            </span>
+                        </div>
+
+                        <button type="submit" className="btn btn-primary my-2" >login</button>
+                        <p className="form-check-label" >
+                            If you don't have an account <Link to="/signup">SignUp</Link> Here
+                        </p>
+                    </form>
+                    </div>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input type="password" onChange={onChange} value={credentials.password} name='password' className="form-control" id="password" />
-                </div>
-                <div className="col-auto">
-                    <span id="passwordHelpInline" className="form-text">
-                        Must be 5-8 characters long.
-                    </span>
+                <div className='container my-5 loginContainer'  >
+                   
+
+
+                   
                 </div>
 
-                <button type="submit" className="btn btn-primary my-2" >login</button>
-                <p className="form-check-label" >
-                     If you don't have an account <Link to="/signup">SignUp</Link> Here
-                    </p>
-            </form>
-        </div>
+
+            </div>
+
+
+        </>
     )
 }
 

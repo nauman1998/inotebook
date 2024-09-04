@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Signup = (props) => {
 
     const [user, setuser] = useState({ name: "", email: "", password: "", cpassword: "" })
@@ -28,7 +28,7 @@ const Signup = (props) => {
             if (json.success) {
                 // Save the auth-token and redirect
                 localStorage.setItem('token', json.authtoken)
-                usenavigate('/')
+                usenavigate('/login')
                 props.showAlert('User Created', 'success')
             }
             else {
@@ -43,32 +43,41 @@ const Signup = (props) => {
     return (
         <div className='container'>
 
-            <form onSubmit={handlesubmit} className='my-5'>
-                <h3>SignUp to use Inotebook ...</h3>
-                <div className="form-group">
-                    <label htmlFor="name">Enter Name:</label>
-                    <input type="text" onChange={onChange} value={user.name} name='name' className="form-control" minLength={3} required id="name" aria-describedby="emailHelp" />
+
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-6">
+                    <img className="loginImage" src="https://project-inotebook.netlify.app/static/media/Login-signup.0eb2d81b.png" alt="something" />
 
                 </div>
-                <div className="form-group">
-                    <label htmlFor="email">Enter Email address:</label>
-                    <input type="email" onChange={onChange} value={user.email} name='email' className="form-control" id="email" aria-describedby="emailHelp" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Enter Password:</label>
-                    <input type="password" onChange={onChange} value={user.password} minLength={5} required name='password' className="form-control" id="password" />
-                </div>
+                <div class="col-lg-6 col-md-12 col-sm-6">
+                    <form onSubmit={handlesubmit} className='my-5 signupform'>
+                        <h3>SignUp to use Inotebook ...</h3>
+                        <div className="form-group">
+                            <label htmlFor="name">Enter Name:</label>
+                            <input type="text" onChange={onChange} value={user.name} name='name' className="form-control" minLength={3} required id="name" aria-describedby="emailHelp" />
 
-                <div className="form-group">
-                    <label htmlFor="cpassword">Confirm Password:</label>
-                    <input type="password" onChange={onChange} name='cpassword' minLength={5} required className="form-control" id="cpassword" />
-                </div>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="email">Enter Email address:</label>
+                            <input type="email" onChange={onChange} value={user.email} name='email' className="form-control" id="email" aria-describedby="emailHelp" />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password">Enter Password:</label>
+                            <input type="password" onChange={onChange} value={user.password} minLength={5} required name='password' className="form-control" id="password" />
+                        </div>
 
-                <button type="submit" className="btn btn-primary my-2" >SignUp</button>
-                <p className="form-check-label" >
-                     If you have an account  <Link to="/login">Login</Link> to continue
-                    </p>
-            </form>
+                        <div className="form-group">
+                            <label htmlFor="cpassword">Confirm Password:</label>
+                            <input type="password" onChange={onChange} name='cpassword' minLength={5} required className="form-control" id="cpassword" />
+                        </div>
+
+                        <button type="submit" className="btn btn-primary my-2" >SignUp</button>
+                        <p className="form-check-label" >
+                            If you have an account  <Link to="/login">Login</Link> to continue
+                        </p>
+                    </form>
+                </div>
+            </div>
         </div>
     )
 }

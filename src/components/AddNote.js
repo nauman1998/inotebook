@@ -40,7 +40,7 @@ const AddNote = (props) => {
                     <input type="text" onChange={onChange} value={note.tag} minLength={5} required name='tag' className="form-control" id="tag" />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="images" className="form-label">Images</label>
+                    <label htmlFor="images" className="form-label">Images & PDF Acceptable only</label>
                     <input type="file" multiple onChange={handleFileChange} name="images" className="form-control" id="images" />
                 </div>
                 <button disabled={note.title.length < 5 || note.description.length < 5 || note.tag.length < 5} type="submit" className="btn btn-primary" onClick={handleonClick}>Add Note</button>
